@@ -34,8 +34,7 @@ const Table = () => {
 
   const billData = products.map((product, index) => {
 
-    if(index==products.length-1){
-        if (product.name !== "") {
+    if(index==products.length-1 && product.name !== ""){
             products.push({
                 sn: products.length,
                 name: "",
@@ -44,9 +43,10 @@ const Table = () => {
                 discount: "",
             });
             setProducts(products);         
-        }
     }
-
+    if(index!==products.length-1 && product.name === ""){
+        products.pop()
+    }
 
     return (
       <tr key={index}>

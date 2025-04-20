@@ -11,6 +11,7 @@ return (
     <button className="ui-btn" onClick={() => reactToPrintFn()}>
         <span>Print</span>
       </button>
+      
       <div ref={contentRef} className="table" >
         <Table />
       </div>
