@@ -1,3 +1,53 @@
+
+@media print {
+  @page {
+    margin: 0;
+    size: A4;
+  }
+  body{
+    width: 21cm;
+    padding-top: 30mm;
+    box-sizing: border-box;
+    margin: 1rem;
+ }
+ input{
+  background-color: white;
+ }
+}
+
+.customer-details{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 1rem 0;
+}
+.customer-details input{
+  width: 20rem;
+  text-align: start;
+  background-color: #e8e8e8;
+}
+
+nav{
+  display: flex;
+  justify-content: space-between;
+}
+nav>div{
+  display: flex;
+  align-items: center;
+}
+nav h1{
+  padding-top: .7rem;
+  font-size: 1.5rem;
+  margin-left: 1rem;
+}
+
+#root{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #e8e8e8;
+}
 *{
   margin: 0;
   padding: 0;
@@ -6,19 +56,32 @@
   font-size: 1rem;
   text-align: center;
 }
+.bill-number{
+  display: flex;
+  justify-content: flex-end;
+}
+table{
+  max-width: 651px;
+}
 table, th, td{
   border-collapse: collapse;
   border: 3px solid black;
 }
 input{
   border:none;
+  background-color: transparent;
+
 }
-input{
-  width: 8rem;
-  background-color: #e8e8e8;
+td input{
+  width: 7rem;
+
+}
+#name{
+  width: 12rem;
 }
 body{
   background-color: #e8e8e8;
+
 }
 input,td{
   font-weight: bold;
@@ -29,7 +92,19 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-
+.bill-by{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 6rem 0;
+}
+.whom > h2{
+  border-top: 3px solid black;
+}
+.whom{
+  display: flex;
+  flex-direction: column;
+}
 
 /* From Uiverse.io by Galahhad */ 
 .ui-btn {

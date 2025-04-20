@@ -1,4 +1,5 @@
 import { useState,useMemo } from "react";
+import {ToWords} from "to-words"
 
 const Table = () => {
   const [products, setProducts] = useState([
@@ -11,7 +12,27 @@ const Table = () => {
     }
   ]);
   
-  const grandTotal = useMemo(() => {
+  const toWords = new ToWords({
+    localeCode: 'en-NP',
+    converterOptions: {
+      currency: true,
+      ignoreDecimal: false,
+      ignoreZeroCurrency: false,
+      doNotAddOnly: false,
+      currencyOptions: {
+        name: 'Rupee',
+        plural: 'Rupees',
+        symbol: '₹',
+        fractionalUnit: {
+          name: 'Paisa',
+          plural: 'Paisa',
+          symbol: '',
+        },
+      },
+    },
+  });
+  
+  const total = useMemo(() => {
     return products.reduce((sum, item) => {
       const price = Number(item.price) || 0;
       const quantity = Number(item.quantity) || 0;
@@ -20,7 +41,10 @@ const Table = () => {
       return sum + total;
     }, 0);
   }, [products]);
-
+  
+  const vat= useMemo(() => {
+      return total * 0.13;
+    }, [total]);
   const handleInputChange = (index, field, value) => {
     setProducts((prevProducts) => {
       const updated = [...prevProducts];
@@ -38,6 +62,9 @@ const Table = () => {
             products.push({
                 sn: products.length,
                 name: "",
+                hsn: "",
+                batch: "",
+                expiry: "",
                 price: "",
                 quantity: "",
                 discount: "",
@@ -55,10 +82,35 @@ const Table = () => {
           <strong>{index}</strong>{" "}
         </td>
         <td>
-          <input
-            type="text"
+          <input autoComplete="off"
+            type="text" id="name"
             value={product.name}
             onChange={(e) => handleInputChange(index, "name", e.target.value)}
+
+          />
+        </td>
+        <td>
+          <input autoComplete="off"
+            type="number"
+            value={product.hsn}
+            onChange={(e) => handleInputChange(index, "hsn", e.target.value)}
+
+          />
+        </td>
+        <td>
+          <input autoComplete="off"
+            type="text"
+            value={product.batch}
+            onChange={(e) => handleInputChange(index, "batch", e.target.value)}
+
+          />
+        </td>
+        <td>
+          <input autoComplete="off"
+            type="text"
+            value={product.expiry}
+            onChange={(e) => handleInputChange(index, "expiry", e.target.value)}
+
           />
         </td>
         <td>
@@ -94,11 +146,15 @@ const Table = () => {
   });
 
   return (
+    <>
     <table border="1">
       <thead>
         <tr>
           <th>S.N.</th>
           <th>Name</th>
+          <th>HSN NO</th>
+          <th>Batch</th>
+          <th>Expiry</th>
           <th>price</th>
           <th>Quantity</th>
           <th>Discount</th>
@@ -107,11 +163,23 @@ const Table = () => {
       </thead>
       <tbody>{billData}
       <tr>
-      <td colSpan="5" >Grand total</td>
-        <td>{grandTotal}</td>
+      <td colSpan="7" rowSpan="3" id="inWords" >
+      <strong >IN Words:{toWords.convert(total+vat,{currency:true})}</strong>
+      </td>
+      <td >Total</td>
+        <td>{total}</td>
+      </tr>
+      <tr>
+      <td >Vat</td>
+        <td>{vat.toFixed(2)}</td>
+      </tr>
+      <tr>
+      <td >Grand total</td>
+        <td>{total+vat}</td>
       </tr>
       </tbody>
     </table>
+    </>
   );
 };
 
