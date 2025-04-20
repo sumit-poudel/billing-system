@@ -164,7 +164,7 @@ const Table = () => {
       <tbody>{billData}
       <tr>
       <td colSpan="7" rowSpan="3" id="inWords" >
-      <strong >IN Words:{toWords.convert(total+vat,{currency:true})}</strong>
+      <strong >IN Words:{toWords.convert((total+vat).toFixed(2),{currency:true})}</strong>
       </td>
       <td >Total</td>
         <td>{total}</td>
@@ -175,7 +175,7 @@ const Table = () => {
       </tr>
       <tr>
       <td >Grand total</td>
-        <td>{total+vat}</td>
+        <td>{(total+vat).toFixed(2)}</td>
       </tr>
       </tbody>
     </table>
